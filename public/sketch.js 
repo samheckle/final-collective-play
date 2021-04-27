@@ -1,0 +1,38 @@
+// Open and connect socket
+let socket = io();
+let myTurn = false;
+
+// Listen for when the socket connects
+socket.on('connect', function(){
+  // Log a success message
+  console.log("HEY I'VE CONNECTED");
+});
+
+function setup() {
+  createCanvas(400, 400);
+  
+  
+  
+  // Listen for data coming from the server
+  socket.on('go', function(){
+    console.log("ITS MY TURN!");
+    myTurn = true;
+  });
+}
+
+function draw() {
+  //background(220);
+}
+
+function keyPressed() {
+  // If it's my turn, queue next client
+  if(myTurn) {
+    socket.emit('next');
+    // No longer my turn
+    myTurn = false;
+  }
+}
+
+
+
+
